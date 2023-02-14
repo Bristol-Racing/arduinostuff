@@ -7,6 +7,8 @@ const int LOADCELL_SCK_PIN = 3;
 const int time_per_reading = 100;
 const int readings = 10;
 
+const double arm_length = 142.5 / 1000.0;  //  meters
+
 int currentReadings = 0;
 long reading = 0;
 
@@ -24,7 +26,12 @@ void loop() {
     currentReadings++;
 
     if (currentReadings >= readings) {
-      Serial.println(reading / readings);
+      long average = reading / readings;
+      double weight = 0.0022 * (double)average + 147.39;  //  grams
+      double force = (weight / 1000.0) * 9.8066500286389; //  newtons
+      double torque = force * arm_length;                 //  newton-meters
+      
+      Serial.println(weight);
       reading = 0;
       currentReadings = 0;
     }
