@@ -1,10 +1,13 @@
 #include "sensor/loadCell.hpp"
 #include "sensor/hallEffect.hpp"
+#include "sensor/current.hpp"
 #include "sensor/sensorManager.hpp"
 
 // HX711 circuit wiring
 const int LOADCELL_DOUT_PIN = 3;
 const int LOADCELL_SCK_PIN = 4;
+
+#define VIN A0
 
 const int time_per_reading = 100;
 const int readings = 10;
@@ -14,9 +17,10 @@ const double arm_length = 142.5 / 1000.0;  //  meters
 int currentReadings = 0;
 long reading = 0;
 
-int sensorCount = 2;
+int sensorCount = 3;
 Sensor::LoadCell scale(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN, arm_length);
 Sensor::HallEffect hallEffect;
+Sensor::CurrentSensor currentSensor(VIN);
 
 Sensor::SensorManager manager(sensorCount, time_per_reading * readings);
 
@@ -27,6 +31,7 @@ void setup() {
 
     manager.addSensor(&scale);
     manager.addSensor(&hallEffect);
+    manager.addSensor(&currentSensor);
     manager.setReadCallback(&readCallback);
 }
 

@@ -155,8 +155,10 @@ namespace Sensor {
         int minTime = nextTicks[0];
 
         for (int i = 1; i < sensorCount; i++) {
-            if (nextTicks[i] < minTime) {
-                minTime = nextTicks[i];
+            if (sensors[i]->getTickRate() > 0) {
+                if (nextTicks[i] < minTime) {
+                    minTime = nextTicks[i];
+                }
             }
         }
 
