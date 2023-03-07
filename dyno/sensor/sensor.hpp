@@ -2,6 +2,8 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
+#include "../check.hpp"
+
 namespace Sensor {
     class Sensor {
     private:
@@ -22,11 +24,8 @@ namespace Sensor {
     };
 
     void Sensor::setTickRate(int newTickRate) {
-        //  Skip if newTickRate is invalid (less than 1)
-        if (newTickRate <= 0) return;
-
-        //  Skip if tickRate is already set
-        if (tickRate > 0) return;
+        CHECK(newTickRate >= 1, "Tick rate must be at least 1 millisecond")
+        CHECK(tickRate == -1, "Tick rate already set")
 
         tickRate = newTickRate;
     }
@@ -36,11 +35,8 @@ namespace Sensor {
     }
 
     void Sensor::setReadRate(int newReadRate) {
-        //  Skip if newReadRate is invalid (less than 1)
-        if (newReadRate <= 0) return;
-
-        //  Skip if readRate is already set
-        if (readRate > 0) return;
+        CHECK(newReadRate >= 1, "Read rate must be at least 1 millisecond")
+        CHECK(readRate == -1, "Read rate already set")
 
         readRate = newReadRate;
     }

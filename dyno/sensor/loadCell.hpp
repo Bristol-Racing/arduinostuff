@@ -2,6 +2,18 @@
 #ifndef LOADCELL_H
 #define LOADCELL_H
 
+int freeRam() {
+  extern int __heap_start,*__brkval;
+  int v;
+  return (int)&v - (__brkval == 0  
+    ? (int)&__heap_start : (int) __brkval);  
+}
+
+void display_freeram() {
+  Serial.print(F("- SRAM left: "));
+  Serial.println(freeRam());
+}
+
 #include "sensor.hpp"
 
 #include <HX711.h>
@@ -51,6 +63,7 @@ namespace Sensor {
         
         totalReading = 0;
         readings = 0;
+
         return torque;
     }
 }
