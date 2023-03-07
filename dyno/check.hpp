@@ -1,3 +1,6 @@
+#ifndef CHECK_H
+#define CHECK_H
+
 #define CHECK(cond, message)                                                    \
     {                                                                           \
         if (!(cond)) {                                                          \
@@ -7,3 +10,5 @@
             while (true) {delay(1000);}                                         \
         }                                                                       \
     }
+
+#endif

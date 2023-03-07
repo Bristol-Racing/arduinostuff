@@ -1,4 +1,7 @@
 
+#ifndef SENSOR_MANAGER_H
+#define SENSOR_MANAGER_H
+
 #include "sensor.hpp"
 
 namespace Sensor {
@@ -20,8 +23,6 @@ namespace Sensor {
 
         int spinTime;
 
-        int readDelay;
-
         ReadCallback readCallback;
 
         void updateTimes();
@@ -29,7 +30,7 @@ namespace Sensor {
         void processReads();
 
     public:
-        SensorManager(int maxSensors, int maxReadDelay, int rate = -1);
+        SensorManager(int maxSensors, int rate = -1);
         ~SensorManager();
 
         void setReadCallback(ReadCallback callback);
@@ -40,7 +41,7 @@ namespace Sensor {
         int timeToNextRead();
     };
     
-    SensorManager::SensorManager(int maxSensors, int maxReadDelay, int rate = -1) {
+    SensorManager::SensorManager(int maxSensors, int rate = -1) {
         sensorCount = 0;
         maxSensorCount = maxSensors;
 
@@ -54,8 +55,6 @@ namespace Sensor {
         prevTime = millis();
 
         spinTime = 0;
-
-        readDelay = maxReadDelay;
 
         readCallback = NULL;
     }
@@ -168,3 +167,5 @@ namespace Sensor {
         return nextRead;
     }
 }
+
+#endif
