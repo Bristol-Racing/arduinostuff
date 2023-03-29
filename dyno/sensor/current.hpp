@@ -47,20 +47,14 @@ namespace Sensor {
         //Robojax.com ACS758 Current Sensor 
         double average = (double)totalReading / (double)readings;
         double voltage = (5.0 / 1023.0) * (double)average;// Read the voltage from sensor
-        voltage = voltage - (vcc * 0.5) + 0.007;// 0.007 is a value to make voltage zero when there is no current
-        double current = voltage / factor;
-        // Serial.print("V: ");
-        // Serial.print(voltage,3);
-        // Serial.print("V, I: ");
-        // Serial.print(current,2); Serial.println("A");
-        // delay(500);
-        // val = 225;  // read the input pin
-        // analogWrite(ledPin, val); // analogRead values go from 0 to 1023, analogWrite values from 0 to 255
+        // double a = voltage - (vcc * 0.5) + 0.007;// 0.007 is a value to make voltage zero when there is no current
+        // double current = voltage / a;
 
         totalReading = 0;
         readings = 0;
 
-        return current;
+        // return current;
+        return voltage;
     }
 }
 
