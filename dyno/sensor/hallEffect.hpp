@@ -5,7 +5,7 @@
 
 #define HALL_PIN 2
 
-const int ticksPerRev = 2;
+const int ticksPerRev = 3;
 const int calcTime = 10;
 
 bool exists = false;

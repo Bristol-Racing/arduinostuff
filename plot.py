@@ -8,12 +8,12 @@ import time
 
 fig = plt.figure()
 
-sensors = ["torque", "RPM", "current"]
+sensors = ["torque", "RPM", "current", "voltage"]
 yss = []
 xs = []
 axs = []
 
-colours = ["red", "green", "blue"]
+colours = ["red", "green", "blue", "pink"]
 
 logFile = "logs/log.csv"
 
@@ -56,9 +56,6 @@ with open(logFile, "w") as log:
             # print(windowStart)
 
             newXs = xs[windowStart:]
-            print(len(xs))
-            print(len(newXs))
-            print()
 
             xs.clear()
             xs.extend(newXs)

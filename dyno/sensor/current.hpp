@@ -15,6 +15,9 @@ namespace Sensor {
     class CurrentSensor : public Sensor {
     private:
         uint8_t vin;
+
+        long totalReading;
+        int readings;
     public:
         CurrentSensor(uint8_t pin);
         ~CurrentSensor();
@@ -26,6 +29,9 @@ namespace Sensor {
     CurrentSensor::CurrentSensor(uint8_t pin) {
         vin = pin;
         pinMode(pin, INPUT);
+
+        totalReading = 0;
+        readings = 0;
     }
 
     CurrentSensor::~CurrentSensor() {
@@ -33,14 +39,16 @@ namespace Sensor {
     }
 
     void CurrentSensor::tick() {
-
+        totalReading += analogRead(vin);
+        readings++;
     }
 
     double CurrentSensor::read() {
         //Robojax.com ACS758 Current Sensor 
-        float voltage = (5.0 / 1023.0) * analogRead(vin);// Read the voltage from sensor
+        double average = (double)totalReading / (double)readings;
+        double voltage = (5.0 / 1023.0) * (double)average;// Read the voltage from sensor
         voltage = voltage - (vcc * 0.5) + 0.007;// 0.007 is a value to make voltage zero when there is no current
-        float current = voltage / factor;
+        double current = voltage / factor;
         // Serial.print("V: ");
         // Serial.print(voltage,3);
         // Serial.print("V, I: ");
@@ -48,6 +56,9 @@ namespace Sensor {
         // delay(500);
         // val = 225;  // read the input pin
         // analogWrite(ledPin, val); // analogRead values go from 0 to 1023, analogWrite values from 0 to 255
+
+        totalReading = 0;
+        readings = 0;
 
         return current;
     }
