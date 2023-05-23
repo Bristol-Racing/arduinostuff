@@ -1,8 +1,7 @@
 {
-    "board": "arduino:avr:nano",
+    "board": "arduino:avr:uno",
     "programmer": "arduino:avrispmkii",
-    "port": "/dev/ttyUSB0",
+    "port": "/dev/ttyACM0",
     "sketch": "dyno/dyno.ino",
-    "output": "build",
-    "configuration": "cpu=atmega328"
+    "output": "build"
 }
