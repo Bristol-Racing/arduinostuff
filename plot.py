@@ -8,12 +8,28 @@ import time
 
 fig = plt.figure()
 
-sensors = ["torque", "RPM", "current", "voltage"]
+sensors = ["torque", "RPM", "current", "voltage", "temperature"]
+maxVals = [1.2, 2500, 2000, 26, 50]
+
+def sensorIndex(sensor):
+    i = 0
+    while sensors[i] != sensor:
+        i += 1
+    return i
+
+def resistance():
+    return sensors[sensorIndex("voltage")] / sensors[sensorIndex("current")]
+
+calcVals = ["resistance"]
+calcFuncs = []
+maxCalcVals = [8]
 yss = []
 xs = []
 axs = []
 
-colours = ["red", "green", "blue", "pink"]
+def colours(i):
+    colourOptions = ["red", "green", "blue"]
+    return colourOptions[i % len(colourOptions)]
 
 logFile = "logs/log.csv"
 
@@ -69,8 +85,9 @@ with open(logFile, "w") as log:
             for i, ys in enumerate(yss):
                 axs[i].clear()
                 axs[i].set_title(sensors[i])
-                axs[i].plot(xs, ys, color=colours[i])
+                axs[i].plot(xs, ys, color=colours(i))
                 axs[i].set_xlim(newTime - window, newTime)
+                axs[i].set_ylim(0, maxVals[i])
 
 
     serial = Serial("/dev/ttyUSB0", 57600)
