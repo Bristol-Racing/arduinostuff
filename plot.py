@@ -59,6 +59,9 @@ with open(logFile, "w") as log:
             pass
 
         if data is not None:
+            if len(data) != len(sensors):
+                raise ValueError("Data length does not match number of listed sensors")
+
             newTime = time.time() - startTime                   
             xs.append(newTime)
 
@@ -75,7 +78,7 @@ with open(logFile, "w") as log:
 
             xs.clear()
             xs.extend(newXs)
-            
+
             for i, val in enumerate(data):
                 yss[i].append(val)
                 newYs = yss[i][windowStart:]
